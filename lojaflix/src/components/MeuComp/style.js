@@ -15,12 +15,14 @@ export const Quadrado = styled.div`
   }
 `;
 
-export const Circulo = styled.button`
+export const Circulo = styled.div`
      background-color: blueviolet;
      border-radius: 50px;
      margin: auto;
-     width:50px;
-     height:20px;
+     display: flex;
+     align-self: center;
+     width:100px;
+     height:100px;
      font-style: normal;
      font-weight: bold;
      text-align:center;

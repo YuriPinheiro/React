@@ -7,8 +7,8 @@ function Personalizado(){
     return (
 
         <Quadrado>
-            <Circulo >
-                <h1>Yuri</h1>
+            <Circulo>
+                <h1 style={{margin: '9px'}}>Yuri</h1>
             </Circulo>
         </Quadrado>
     );
