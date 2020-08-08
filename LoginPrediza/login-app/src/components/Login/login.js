@@ -32,16 +32,16 @@ import apiPost from '../Api/api'
                 username:this.state.email,
                 password: this.state.password
               }).then((chave) => {
-                if(chave !== "401"){
+                if(chave){
                 this.setState({token: chave});
                 this.setState({redirect: '/logado'});
               }else{
-                alert('Usuario ou senha incorretos!')
+                alert("Usuário ou Senha incorretos!")
               }
               });
             
             }catch(erro){
-              //console.log(erro);
+              console.log('👉 Error:');
               alert('Usuario ou senha inválidos!');
             }
 
