@@ -1,12 +1,17 @@
-import React, {useState} from 'react';
+import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import {Redirect} from 'react-router-dom'
 
 import {style} from './styles'
 import {ButtonP, Box, border} from './styles';
+
+import apiPost from '../Api/api'
+
+
 
   export default class SignIn extends React.Component {
 
@@ -14,14 +19,44 @@ import {ButtonP, Box, border} from './styles';
         email:'',
         password:'',
         token:'',
+        redirect: null,
     }
 
     handleSignUp = event => {
         event.preventDefault();
-        alert("Login teste!"+this.state.email+this.state.password);
+        
+          if((this.state.email !== '')&&(this.state.password !== '')){
+
+            try{
+              apiPost({
+                username:this.state.email,
+                password: this.state.password
+              }).then((chave) => {
+                if(chave !== "401"){
+                this.setState({token: chave});
+                this.setState({redirect: '/logado'});
+              }else{
+                alert('Usuario ou senha incorretos!')
+              }
+              });
+            
+            }catch(erro){
+              //console.log(erro);
+              alert('Usuario ou senha inválidos!');
+            }
+
+          }else{
+            alert("Preencha os campos!");
+          }
+        
+       
       };
 
 render() {
+
+    if(this.state.redirect){
+      return <Redirect to={this.state.redirect} />
+    }
     return (
     <Box>
         <Grid
@@ -38,6 +73,7 @@ render() {
 
           <Typography component="h1" variant="h5">
             Login
+            
           </Typography>
           <form className={style.form} onSubmit={this.handleSignUp}>
             <TextField
