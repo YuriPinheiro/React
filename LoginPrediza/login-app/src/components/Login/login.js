@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
@@ -13,28 +13,26 @@ import apiPost from '../Api/api'
 
 
 
-  export default class SignIn extends React.Component {
+  export default function SignIn() {
 
-    state ={
-        email:'',
-        password:'',
-        token:'',
-        redirect: null,
-    }
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [token, setToken] = useState('');
+    const [redirect, setRedirect] = useState(null);
 
-    handleSignUp = event => {
+    const handleSignUp = event => {
         event.preventDefault();
         
-          if((this.state.email !== '')&&(this.state.password !== '')){
+          if((username !== '')&&(password !== '')){
 
             try{
               apiPost({
-                username:this.state.email,
-                password: this.state.password
+                username: username,
+                password: password
               }).then((chave) => {
                 if(chave){
-                this.setState({token: chave});
-                this.setState({redirect: '/logado'});
+                setToken(chave);
+                setRedirect('/logado');
               }else{
                 alert("Usuário ou Senha incorretos!")
               }
@@ -52,10 +50,9 @@ import apiPost from '../Api/api'
        
       };
 
-render() {
 
-    if(this.state.redirect){
-      return <Redirect to={this.state.redirect} />
+    if(redirect){
+      return <Redirect to={redirect} />
     }
     return (
     <Box>
@@ -75,7 +72,7 @@ render() {
             Login
             
           </Typography>
-          <form className={style.form} onSubmit={this.handleSignUp}>
+          <form className={style.form} onSubmit={handleSignUp}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -85,7 +82,7 @@ render() {
               label="Email Address"
               name="email"
               autoComplete="email"
-              onChange={event => this.setState({ email: event.target.value })}
+              onChange={event => setUsername(event.target.value)}
               autoFocus
             />
             <TextField
@@ -97,7 +94,7 @@ render() {
               label="Password"
               type="password"
               id="senha"
-              onChange={event => this.setState({ password: event.target.value })}
+              onChange={event => setPassword(event.target.value)}
               autoComplete="current-password"
             />
             <ButtonP
@@ -117,5 +114,4 @@ render() {
       </Box>
     
     );
-}
 }
