@@ -1,0 +1,1 @@
+Repositório com projetos variados. São exemplos de interfaces, componentes e sites simples desenvolvidos por diversão e prática, testando conceitos como estados, props, hooks, rotas e integração com APIs.
